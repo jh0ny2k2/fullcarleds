@@ -127,7 +127,7 @@ function genId() { return Date.now().toString(36) + Math.random().toString(36).s
 /* ==============================
    PRODUCTOS
    ============================== */
-const CATS = { led: 'LED Ambiental', techo: 'Techo Estrellado', cuadro: 'Cuadro Digital', personalizacion: 'Personalización' };
+const ADMIN_CATS = { led: 'LED Ambiental', techo: 'Techo Estrellado', cuadro: 'Cuadro Digital', personalizacion: 'Personalización' };
 
 function renderProd() {
   const el = document.getElementById('prod-list');
@@ -139,7 +139,7 @@ function renderProd() {
       <img class="card-row-img" src="${p.image}" alt="${p.name}" loading="lazy">
       <div class="card-row-info">
         <div class="nm">${p.name}</div>
-        <div class="mt">${CATS[p.category] || p.category}${p.featured ? ' · Destacado' : ''}${p.active ? '' : ' · Inactivo'}</div>
+        <div class="mt">${ADMIN_CATS[p.category] || p.category}${p.featured ? ' · Destacado' : ''}${p.active ? '' : ' · Inactivo'}</div>
       </div>
       <div class="card-row-val">${p.price}€</div>
       <div class="card-row-actions">
@@ -153,7 +153,7 @@ function renderProd() {
 function openProdModal(prod) {
   const isEdit = !!prod;
   const p = prod || {};
-  const catsOpts = Object.entries(CATS).map(([v, l]) =>
+  const catsOpts = Object.entries(ADMIN_CATS).map(([v, l]) =>
     `<option value="${v}"${v === (p.category || 'led') ? ' selected' : ''}>${l}</option>`
   ).join('');
 
@@ -256,7 +256,7 @@ function renderTrab() {
       <img class="card-row-img" src="${t.images?.[0] || ''}" alt="${t.title}" loading="lazy">
       <div class="card-row-info">
         <div class="nm">${t.title}</div>
-        <div class="mt">${CATS[t.category] || t.category}${t.featured ? ' · Destacado' : ''} · ${t.client || '—'}</div>
+        <div class="mt">${ADMIN_CATS[t.category] || t.category}${t.featured ? ' · Destacado' : ''} · ${t.client || '—'}</div>
       </div>
       <div class="card-row-val" style="font-size:0.75rem;color:#888;font-weight:400">${t.date || ''}</div>
       <div class="card-row-actions">
@@ -270,7 +270,7 @@ function renderTrab() {
 function openTrabModal(trab) {
   const isEdit = !!trab;
   const t = trab || {};
-  const catsOpts = Object.entries(CATS).map(([v, l]) =>
+  const catsOpts = Object.entries(ADMIN_CATS).map(([v, l]) =>
     `<option value="${v}"${v === (t.category || 'led') ? ' selected' : ''}>${l}</option>`
   ).join('');
 
