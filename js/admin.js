@@ -89,7 +89,8 @@ function showToast(msg) {
    SEED DATA
    ============================== */
 function seedData() {
-  if (!localStorage.getItem(KEYS.products)) {
+  const existingProds = JSON.parse(localStorage.getItem(KEYS.products) || '[]');
+  if (!existingProds.length) {
     localStorage.setItem(KEYS.products, JSON.stringify([
       { id: 'p1', name: 'LED Ambiental Básico', description: '4 zonas de iluminación RGB, control por app, instalación oculta.', price: 140, oldPrice: null, category: 'led', image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&q=80', features: ['4 Zonas', 'App Móvil', 'Colores RGB', 'Instalación oculta'], featured: false, active: true },
       { id: 'p2', name: 'LED Ambiental Style', description: '8 zonas, efectos dinámicos, sincronización con música, acabado premium.', price: 190, oldPrice: null, category: 'led', image: 'https://images.unsplash.com/photo-1552519507-da3b142c6e08?w=400&q=80', features: ['8 Zonas', 'Efectos dinámicos', 'Sincronización música', 'Acabado premium'], featured: true, active: true },
