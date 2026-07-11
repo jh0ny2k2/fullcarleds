@@ -88,25 +88,65 @@ function showToast(msg) {
 /* ==============================
    SEED DATA
    ============================== */
+const SEED_IMAGES = {
+  p1: 'https://images.unsplash.com/photo-1583267746897-2cf415887172?w=400&q=80',
+  p2: 'https://images.unsplash.com/photo-1542362567-b07e54358753?w=400&q=80',
+  p3: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&q=80',
+  p4: 'https://images.unsplash.com/photo-1550355291-bbee04a92027?w=400&q=80',
+  p5: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?w=400&q=80',
+  p6: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400&q=80',
+  p7: 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=400&q=80',
+  p8: 'https://images.unsplash.com/photo-1617469767053-d3b523a0b982?w=400&q=80',
+  p9: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=400&q=80',
+};
+const SEED_TRAB_IMAGES = {
+  t1: 'https://images.unsplash.com/photo-1583267746897-2cf415887172?w=400&q=80',
+  t2: 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=400&q=80',
+  t3: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=400&q=80',
+};
+
+function updateExistingImages() {
+  let changed = false;
+  let prods = JSON.parse(localStorage.getItem(KEYS.products) || '[]');
+  prods.forEach(p => {
+    if (SEED_IMAGES[p.id] && p.image !== SEED_IMAGES[p.id]) {
+      p.image = SEED_IMAGES[p.id];
+      changed = true;
+    }
+  });
+  if (changed) localStorage.setItem(KEYS.products, JSON.stringify(prods));
+
+  changed = false;
+  let trabs = JSON.parse(localStorage.getItem(KEYS.trabajos) || '[]');
+  trabs.forEach(t => {
+    if (SEED_TRAB_IMAGES[t.id] && t.images?.[0] !== SEED_TRAB_IMAGES[t.id]) {
+      t.images = [SEED_TRAB_IMAGES[t.id]];
+      changed = true;
+    }
+  });
+  if (changed) localStorage.setItem(KEYS.trabajos, JSON.stringify(trabs));
+}
+
 function seedData() {
+  updateExistingImages();
   const existingProds = JSON.parse(localStorage.getItem(KEYS.products) || '[]');
   if (!existingProds.length) {
     localStorage.setItem(KEYS.products, JSON.stringify([
-      { id: 'p1', name: 'LED Ambiental Básico', description: '4 zonas de iluminación RGB, control por app, instalación oculta.', price: 140, oldPrice: null, category: 'led', image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&q=80', features: ['4 Zonas', 'App Móvil', 'Colores RGB', 'Instalación oculta'], featured: false, active: true },
-      { id: 'p2', name: 'LED Ambiental Style', description: '8 zonas, efectos dinámicos, sincronización con música, acabado premium.', price: 190, oldPrice: null, category: 'led', image: 'https://images.unsplash.com/photo-1552519507-da3b142c6e08?w=400&q=80', features: ['8 Zonas', 'Efectos dinámicos', 'Sincronización música', 'Acabado premium'], featured: true, active: true },
-      { id: 'p3', name: 'LED Ambiental Premium', description: '16 zonas, todos los efectos, perfiles personalizados, asistentes de voz.', price: 290, oldPrice: 350, category: 'led', image: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=400&q=80', features: ['16 Zonas', 'Perfiles personalizados', 'Asistentes de voz', 'Instalación invisible'], featured: false, active: true },
-      { id: 'p4', name: 'Techo Estrellado Básico', description: '300 puntos de fibra óptica, color blanco cálido, 4 estrellas fugaces.', price: 349, oldPrice: null, category: 'techo', image: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?w=400&q=80', features: ['300 puntos', 'Blanco cálido', '4 fugaces', 'Garantía 1 año'], featured: false, active: true },
-      { id: 'p5', name: 'Techo Estrellado Pro', description: '500 puntos RGB, 8 estrellas fugaces, constelaciones personalizadas, app.', price: 499, oldPrice: 599, category: 'techo', image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400&q=80', features: ['500 puntos', 'RGB', '8 fugaces', 'Constelaciones', 'App'], featured: true, active: true },
-      { id: 'p6', name: 'Techo Estrellado Ultra', description: '800+ puntos, RGB completo, 16 fugaces, diseño total personalizado.', price: 750, oldPrice: null, category: 'techo', image: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?w=400&q=80', features: ['800+ puntos', 'RGB completo', '16 fugaces', 'Diseño total'], featured: false, active: true },
-      { id: 'p7', name: 'Cuadro Digital', description: 'Pantalla digital con navegación, ADAS, información en tiempo real.', price: 650, oldPrice: null, category: 'cuadro', image: 'https://images.unsplash.com/photo-1617469767053-d3b523a0b982?w=400&q=80', features: ['Navegación', 'ADAS', 'Tiempo real', 'Plug & Play'], featured: false, active: true },
+      { id: 'p1', name: 'LED Ambiental Básico', description: '4 zonas de iluminación RGB, control por app, instalación oculta.', price: 140, oldPrice: null, category: 'led', image: 'https://images.unsplash.com/photo-1583267746897-2cf415887172?w=400&q=80', features: ['4 Zonas', 'App Móvil', 'Colores RGB', 'Instalación oculta'], featured: false, active: true },
+      { id: 'p2', name: 'LED Ambiental Style', description: '8 zonas, efectos dinámicos, sincronización con música, acabado premium.', price: 190, oldPrice: null, category: 'led', image: 'https://images.unsplash.com/photo-1542362567-b07e54358753?w=400&q=80', features: ['8 Zonas', 'Efectos dinámicos', 'Sincronización música', 'Acabado premium'], featured: true, active: true },
+      { id: 'p3', name: 'LED Ambiental Premium', description: '16 zonas, todos los efectos, perfiles personalizados, asistentes de voz.', price: 290, oldPrice: 350, category: 'led', image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&q=80', features: ['16 Zonas', 'Perfiles personalizados', 'Asistentes de voz', 'Instalación invisible'], featured: false, active: true },
+      { id: 'p4', name: 'Techo Estrellado Básico', description: '300 puntos de fibra óptica, color blanco cálido, 4 estrellas fugaces.', price: 349, oldPrice: null, category: 'techo', image: 'https://images.unsplash.com/photo-1550355291-bbee04a92027?w=400&q=80', features: ['300 puntos', 'Blanco cálido', '4 fugaces', 'Garantía 1 año'], featured: false, active: true },
+      { id: 'p5', name: 'Techo Estrellado Pro', description: '500 puntos RGB, 8 estrellas fugaces, constelaciones personalizadas, app.', price: 499, oldPrice: 599, category: 'techo', image: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?w=400&q=80', features: ['500 puntos', 'RGB', '8 fugaces', 'Constelaciones', 'App'], featured: true, active: true },
+      { id: 'p6', name: 'Techo Estrellado Ultra', description: '800+ puntos, RGB completo, 16 fugaces, diseño total personalizado.', price: 750, oldPrice: null, category: 'techo', image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400&q=80', features: ['800+ puntos', 'RGB completo', '16 fugaces', 'Diseño total'], featured: false, active: true },
+      { id: 'p7', name: 'Cuadro Digital', description: 'Pantalla digital con navegación, ADAS, información en tiempo real.', price: 650, oldPrice: null, category: 'cuadro', image: 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=400&q=80', features: ['Navegación', 'ADAS', 'Tiempo real', 'Plug & Play'], featured: false, active: true },
       { id: 'p8', name: 'Tapizado Premium', description: 'Renovación de tapicería en cuero, alcántara y materiales premium.', price: 400, oldPrice: null, category: 'personalizacion', image: 'https://images.unsplash.com/photo-1617469767053-d3b523a0b982?w=400&q=80', features: ['Cuero', 'Alcántara', 'A medida', 'Acabado OEM'], featured: false, active: true },
-      { id: 'p9', name: 'Logos Personalizados', description: 'Logos iluminados, proyección de bienvenida y emblemas a medida.', price: 120, oldPrice: null, category: 'personalizacion', image: 'https://images.unsplash.com/photo-1552519507-da3b142c6e08?w=400&q=80', features: ['Iluminados', 'Proyección', 'Emblemas', 'A medida'], featured: false, active: true },
+      { id: 'p9', name: 'Logos Personalizados', description: 'Logos iluminados, proyección de bienvenida y emblemas a medida.', price: 120, oldPrice: null, category: 'personalizacion', image: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=400&q=80', features: ['Iluminados', 'Proyección', 'Emblemas', 'A medida'], featured: false, active: true },
     ]));
   }
   if (!localStorage.getItem(KEYS.trabajos)) {
     localStorage.setItem(KEYS.trabajos, JSON.stringify([
-      { id: 't1', title: 'BMW Serie 3 — LED + Techo', description: 'Instalación completa de iluminación ambiental LED 8 zonas y techo estrellado Pro.', category: 'led', images: ['https://images.unsplash.com/photo-1552519507-da3b142c6e08?w=400&q=80'], client: 'Carlos M.', date: '2025-11-10', featured: true },
-      { id: 't2', title: 'Audi A4 — Cuadro Digital', description: 'Sustitución del cuadro de instrumentos por pantalla digital con navegación.', category: 'cuadro', images: ['https://images.unsplash.com/photo-1617469767053-d3b523a0b982?w=400&q=80'], client: 'Ana G.', date: '2025-10-22', featured: true },
+      { id: 't1', title: 'BMW Serie 3 — LED + Techo', description: 'Instalación completa de iluminación ambiental LED 8 zonas y techo estrellado Pro.', category: 'led', images: ['https://images.unsplash.com/photo-1583267746897-2cf415887172?w=400&q=80'], client: 'Carlos M.', date: '2025-11-10', featured: true },
+      { id: 't2', title: 'Audi A4 — Cuadro Digital', description: 'Sustitución del cuadro de instrumentos por pantalla digital con navegación.', category: 'cuadro', images: ['https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=400&q=80'], client: 'Ana G.', date: '2025-10-22', featured: true },
       { id: 't3', title: 'Mercedes Clase C — Premium Full', description: 'Restyling completo: LED 16 zonas, techo ultra, tapizado cuero + alcántara.', category: 'personalizacion', images: ['https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=400&q=80'], client: 'Javier R.', date: '2025-09-15', featured: true },
     ]));
   }
